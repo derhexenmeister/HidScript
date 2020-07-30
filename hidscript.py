@@ -152,11 +152,6 @@ class HidScript:
             # probably used the STRING command to deal with some of them. Adding them shouldn't
             # hurt but does consume RAM. Some are Mac specific.
             #
-            "0": Keycode.ZERO,  "1": Keycode.ONE,
-            "2": Keycode.TWO,   "3": Keycode.THREE,
-            "4": Keycode.FOUR,  "5": Keycode.FIVE,
-            "6": Keycode.SIX,   "7": Keycode.SEVEN,
-            "8": Keycode.EIGHT, "9": Keycode.NINE,
             "F1": Keycode.F1,   "F2": Keycode.F2,
             "F3": Keycode.F3,   "F4": Keycode.F4,
             "F5": Keycode.F5,   "F6": Keycode.F6,
@@ -176,23 +171,30 @@ class HidScript:
             "OPTION": Keycode.ALT,
             "PERIOD": Keycode.PERIOD,
             "POUND": Keycode.POUND,
-            "QUOTE": Keycode.QUOTE,
-            "RIGHT_ALT": Keycode.RIGHT_ALT,
-            "RIGHT_BRACKET": Keycode.RIGHT_BRACKET,
-            "RIGHT_CONTROL": Keycode.RIGHT_CONTROL,
-            "RIGHT_GUI": Keycode.RIGHT_GUI,
-            "RIGHT_SHIFT": Keycode.RIGHT_SHIFT,
-            "SEMICOLON": Keycode.SEMICOLON
+            "QUOTE": Keycode.QUOTE
         }
+
+    # Dropped the following to save memory (for now):
+    #       "0": Keycode.ZERO,  "1": Keycode.ONE,
+    #       "2": Keycode.TWO,   "3": Keycode.THREE,
+    #       "4": Keycode.FOUR,  "5": Keycode.FIVE,
+    #       "6": Keycode.SIX,   "7": Keycode.SEVEN,
+    #       "8": Keycode.EIGHT, "9": Keycode.NINE,
+    #       "RIGHT_ALT": Keycode.RIGHT_ALT,
+    #       "RIGHT_BRACKET": Keycode.RIGHT_BRACKET,
+    #       "RIGHT_CONTROL": Keycode.RIGHT_CONTROL,
+    #       "RIGHT_GUI": Keycode.RIGHT_GUI,
+    #       "RIGHT_SHIFT": Keycode.RIGHT_SHIFT,
+    #       "SEMICOLON": Keycode.SEMICOLON,
+
 
     # Execute a single command in a HidScript file
     # REPEAT handled in process
     #
     def _exec_cmd(self, cmd, arg):
         if cmd == "REM":
-            if self.debug: print("Comment: REM ", arg)
+            pass
         elif cmd == "STRING":
-            if self.debug: print("String: STRING ", arg)
             if self.string_delay:
                 for c in arg:
                     self.keyboard_layout.write(c)
@@ -213,13 +215,10 @@ class HidScript:
                 self.keyboard.release_all()
 
         if cmd == "DELAY":
-            if self.debug: print("Delay: DELAY ", arg)
             time.sleep(int(arg)/100.0)
         elif (cmd == "DEFAULTDELAY") or (cmd == "DEFAULT_DELAY"):
-            if self.debug: print("Default delay: DEFAULTDELAY ", arg)
             self.default_delay = int(arg)/100.0
         elif (cmd == "STRINGDELAY") or (cmd == "STRING_DELAY"):
-            if self.debug: print("String delay: STRING_DELAY ", arg)
             self.string_delay = int(arg)/1000.0
         else:
             time.sleep(self.default_delay)
@@ -235,7 +234,7 @@ class HidScript:
                     #
                     line = line.strip()
                     values = line.split(" ", 1)
-                    if self.debug: print("Script line: ", values[0])
+                    if self.debug: print("Script line: ", line)
                     cmd = values[0]
                     if len(values) == 2:
                         arg = values[1]

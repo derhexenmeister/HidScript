@@ -1,0 +1,10 @@
+REM ********************************************************************************
+REM A simple example script for Mac OS (requires Chrome)
+REM ********************************************************************************
+COMMAND SPACE
+Chrome.app
+ENTER
+DELAY 100
+COMMAND t
+STRING https://www.youtube.com/watch?v=dQw4w9WgXcQ
+ENTER
